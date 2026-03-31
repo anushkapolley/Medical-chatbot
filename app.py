@@ -47,7 +47,9 @@ prompt = ChatPromptTemplate.from_messages(
 question_answer_chain = create_stuff_documents_chain(chatModel, prompt)
 rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
-
+@app.route("/health")
+def health():
+    return "Endpoint hit sucessfully"
 
 @app.route("/")
 def index():

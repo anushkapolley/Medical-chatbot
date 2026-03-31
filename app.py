@@ -49,7 +49,7 @@ rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
 @app.route("/health")
 def health():
-    return "Endpoint hit sucessfully"
+    return "Endpoint hit successfully"
 
 @app.route("/")
 def index():

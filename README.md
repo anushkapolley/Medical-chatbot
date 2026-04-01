@@ -87,18 +87,18 @@ Medical-chatbot/
 │   └── prompt.py
 
 
-**⚙️ Installation & Setup**
+⚙️ Installation & Setup
 
-*1. Clone the Repository*
+1. Clone the Repository
 
 git clone https://github.com/anushkapolley/Medical-chatbot.git
 cd Medical-chatbot
 
-**2. Create a Virtual Environment**
+2. Create a Virtual Environment
 
 python -m venv medibot
 
-**3. Activate the Environment**
+3. Activate the Environment
 
 Windows
 medibot\Scripts\activate
@@ -106,19 +106,19 @@ Mac/Linux
 source medibot/bin/activate
 
 
-**4. Install Dependencies**
+4. Install Dependencies
 pip install -r requirements.txt
 
-## 🔐 Environment Variables
+🔐 Environment Variables
 
 Create a .env file in the root directory and add the following:
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_ENV=your_pinecone_environment
 OPENAI_API_KEY=your_openai_api_key
 
-## ⚠️ Make sure your Pinecone index (for example: medical-chatbot) already exists and is accessible before running the app or deploying on Render.
+⚠️ Make sure your Pinecone index (for example: medical-chatbot) already exists and is accessible before running the app or deploying on Render.
 
-## 🧠 Create and Store Embeddings in Pinecone
+🧠 Create and Store Embeddings in Pinecone
 
 Before running the chatbot, you need to process your medical knowledge base and upload embeddings to Pinecone.
 python store_index.py
@@ -129,7 +129,7 @@ Split the content into chunks
 Generate embeddings using OpenAI
 Store the vectors inside your Pinecone index
 
-## ▶️ Run the Project Locally
+▶️ Run the Project Locally
 python app.py
 
 Or with Flask:
@@ -138,7 +138,7 @@ flask run
 Open in browser:
 http://127.0.0.1:5000
 
-## ☁️ Deployment on Render
+☁️ Deployment on Render
 
 This project is deployed using Render.
 

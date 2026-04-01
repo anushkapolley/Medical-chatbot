@@ -85,64 +85,85 @@ Medical-chatbot/
 │   ├── __init__.py
 │   ├── helper.py
 │   └── prompt.py
-```bash
+```
 
 ## ⚙️ Installation & Setup
 
--** 1. Clone the Repository
+# 1. Clone the Repository
 
+```bash
 git clone https://github.com/anushkapolley/Medical-chatbot.git
 cd Medical-chatbot
+```
+# 2. Create a Virtual Environment
 
-2. Create a Virtual Environment
-
+```bash
 python -m venv medibot
+```
+# 3. Activate the Environment
 
-3. Activate the Environment
-
-Windows
+_ **Windows**
+```bash
 medibot\Scripts\activate
-Mac/Linux
+```
+_ **Mac/Linux**
+
+```bash
 source medibot/bin/activate
+```
 
+# 4. Install Dependencies
 
-4. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-🔐 Environment Variables
+# 🔐 Environment Variables
 
-Create a .env file in the root directory and add the following:
+_ **Create a .env file in the root directory and add the following:**
+
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_ENV=your_pinecone_environment
 OPENAI_API_KEY=your_openai_api_key
 
-⚠️ Make sure your Pinecone index (for example: medical-chatbot) already exists and is accessible before running the app or deploying on Render.
+# ⚠️ Make sure your Pinecone index (for example: medical-chatbot) already exists and is accessible before running the app or deploying on Render.
 
-🧠 Create and Store Embeddings in Pinecone
+# 🧠 Create and Store Embeddings in Pinecone
 
 Before running the chatbot, you need to process your medical knowledge base and upload embeddings to Pinecone.
+
 python store_index.py
 
-This script will:
+_ **This script will:**
+
 Load the medical PDF/document
 Split the content into chunks
 Generate embeddings using OpenAI
 Store the vectors inside your Pinecone index
 
-▶️ Run the Project Locally
+# ▶️ Run the Project Locally
+
+```bash
 python app.py
+```
 
-Or with Flask:
+_ **Or with Flask:**
+
+```bash
 flask run
+```
 
-Open in browser:
+_ **Open in browser:**
+
+```bash
 http://127.0.0.1:5000
+```
 
-☁️ Deployment on Render
+# ☁️ Deployment on Render
 
 This project is deployed using Render.
 
-Render Deployment Steps
+_ **Render Deployment Steps**
 
 Push your project to GitHub
 Go to Render
@@ -155,14 +176,14 @@ Start Command
 gunicorn app:app
 Environment Variables
 
-Add these in the Render Dashboard → Environment section:
+_ **Add these in the Render Dashboard → Environment section:**
 
 OPENAI_API_KEY
 PINECONE_API_KEY
 PINECONE_ENV
 Click Deploy
 
-📦 Requirements
+# 📦 Requirements
 
 Example requirements.txt:
 langchain==0.3.27
@@ -177,7 +198,7 @@ tiktoken
 gunicorn
 -e .
 
-⚠️ Important Notes
+# ⚠️ Important Notes
 Your Pinecone index must already exist before deployment.
 If your app works locally but fails on Render, check:
 API keys are correctly added in Render
@@ -186,7 +207,7 @@ The index name matches exactly in your code
 gunicorn app:app matches your Flask app filename and variable name
 
 
-🔮 Future Improvements
+# 🔮 Future Improvements
 Add conversation memory
 Improve chatbot UI/UX
 Add response source citations
@@ -196,16 +217,16 @@ Add Docker support
 Enable streaming responses for better user experience
 
 
-⚠️ Disclaimer
+# ⚠️ Disclaimer
 This chatbot is built for educational and informational purposes only.
 It is not a substitute for professional medical advice, diagnosis, or treatment.
 Always consult a qualified healthcare professional for any medical concerns.
 
 
-👩‍💻 Author
+# 👩‍💻 Author
 Anushka Polley
 AI/ML Enthusiast | LLM & GenAI Projects
 
 
-⭐ Support
+#⭐ Support
 If you found this project useful, consider giving it a star ⭐ on GitHub!

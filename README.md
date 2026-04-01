@@ -87,18 +87,18 @@ Medical-chatbot/
 │   └── prompt.py
 
 
-## ⚙️ Installation & Setup
+**⚙️ Installation & Setup**
 
-#1. Clone the Repository
+*1. Clone the Repository*
 
 git clone https://github.com/anushkapolley/Medical-chatbot.git
 cd Medical-chatbot
 
-#2. Create a Virtual Environment
+**2. Create a Virtual Environment**
 
 python -m venv medibot
 
-#3. Activate the Environment
+**3. Activate the Environment**
 
 Windows
 medibot\Scripts\activate
@@ -106,7 +106,7 @@ Mac/Linux
 source medibot/bin/activate
 
 
-## 4. Install Dependencies
+**4. Install Dependencies**
 pip install -r requirements.txt
 
 ## 🔐 Environment Variables
@@ -142,7 +142,7 @@ http://127.0.0.1:5000
 
 This project is deployed using Render.
 
-#Render Deployment Steps
+Render Deployment Steps
 
 Push your project to GitHub
 Go to Render
@@ -162,7 +162,7 @@ PINECONE_API_KEY
 PINECONE_ENV
 Click Deploy
 
-## 📦 Requirements
+📦 Requirements
 
 Example requirements.txt:
 langchain==0.3.27

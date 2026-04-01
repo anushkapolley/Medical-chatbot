@@ -102,11 +102,11 @@ python -m venv medibot
 ```
 # 3. Activate the Environment
 
-_ **Windows**
+**Windows**
 ```bash
 medibot\Scripts\activate
 ```
-_ **Mac/Linux**
+**Mac/Linux**
 
 ```bash
 source medibot/bin/activate
@@ -120,7 +120,7 @@ pip install -r requirements.txt
 
 # 🔐 Environment Variables
 
-_ **Create a .env file in the root directory and add the following:**
+**Create a .env file in the root directory and add the following:**
 
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_ENV=your_pinecone_environment
@@ -134,7 +134,7 @@ Before running the chatbot, you need to process your medical knowledge base and 
 
 python store_index.py
 
-_ **This script will:**
+**This script will:**
 
 Load the medical PDF/document
 Split the content into chunks
@@ -147,13 +147,13 @@ Store the vectors inside your Pinecone index
 python app.py
 ```
 
-_ **Or with Flask:**
+**Or with Flask:**
 
 ```bash
 flask run
 ```
 
-_ **Open in browser:**
+**Open in browser:**
 
 ```bash
 http://127.0.0.1:5000
@@ -163,7 +163,7 @@ http://127.0.0.1:5000
 
 This project is deployed using Render.
 
-_ **Render Deployment Steps**
+**Render Deployment Steps**
 
 Push your project to GitHub
 Go to Render
@@ -176,7 +176,7 @@ Start Command
 gunicorn app:app
 Environment Variables
 
-_ **Add these in the Render Dashboard → Environment section:**
+**Add these in the Render Dashboard → Environment section:**
 
 OPENAI_API_KEY
 PINECONE_API_KEY

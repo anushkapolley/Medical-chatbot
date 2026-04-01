@@ -85,11 +85,11 @@ Medical-chatbot/
 │   ├── __init__.py
 │   ├── helper.py
 │   └── prompt.py
+```bash
 
+## ⚙️ Installation & Setup
 
-⚙️ Installation & Setup
-
-1. Clone the Repository
+-** 1. Clone the Repository
 
 git clone https://github.com/anushkapolley/Medical-chatbot.git
 cd Medical-chatbot

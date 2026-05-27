@@ -1,7 +1,7 @@
 
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+
 from typing import List
 from langchain.schema import Document
 import os
@@ -41,12 +41,9 @@ def text_split(extracted_data):
 
 
 #Download the Embeddings from HuggingFace 
+from langchain_huggingface import HuggingFaceEmbeddings
+
 def download_embeddings():
-    """
-    Initialize and return the OpenAI embeddings model.
-    """
-    embeddings = OpenAIEmbeddings(
-        model="text-embedding-3-small",
-        api_key=os.getenv("OPENAI_API_KEY")
+    return HuggingFaceEmbeddings(
+        model_name="BAAI/bge-base-en-v1.5"
     )
-    return embeddings

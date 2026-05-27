@@ -70,10 +70,11 @@
 
 # if __name__ == '__main__':
 #     app.run(host="0.0.0.0", port= 8080, debug= True)
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify,  request
+
 from src.helper import download_embeddings
 from langchain_pinecone import PineconeVectorStore
-from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
@@ -82,23 +83,23 @@ from src.prompt import *
 import os
 
 
-app = Flask(__name__)
 
 load_dotenv()
 
 PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY')
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 
-if not PINECONE_API_KEY or not OPENAI_API_KEY:
-    raise ValueError("Missing API keys! Set PINECONE_API_KEY and OPENAI_API_KEY in environment variables.")
+if not PINECONE_API_KEY or not GROQ_API_KEY:
+    raise ValueError("Missing API keys! Set PINECONE_API_KEY and GROQ_API_KEY in environment variables.")
 
 os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 
+app = Flask(__name__)
 
 embeddings = download_embeddings()
 
-index_name = "medical-chatbot"
+index_name = "medical-chatbot-bbg"
 
 docsearch = PineconeVectorStore.from_existing_index(
     index_name=index_name,
@@ -107,7 +108,9 @@ docsearch = PineconeVectorStore.from_existing_index(
 
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
-chatModel = ChatOpenAI(model="gpt-4o")
+chatModel = ChatGroq(
+    model_name="llama-3.1-8b-instant"
+)
 
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -138,7 +141,79 @@ def chat():
     print("Response : ", response["answer"])
     return str(response["answer"])
 
+from flask import Flask, request, jsonify
+
+from src.appointment import (
+    get_doctors_by_speciality,
+    get_available_slots,
+    book_appointment,
+    cancel_appointment
+)
+@app.route("/doctors/<speciality>", methods=["GET"])
+def doctors(speciality):
+    try:
+        data = get_doctors_by_speciality(speciality)
+        return jsonify(data)
+
+    except Exception as e:
+        return jsonify({
+            "error": str(e)
+        }), 500
+
+
+
+@app.route("/availability/<int:doctor_id>", methods=["GET"])
+def availability(doctor_id):
+
+    data = get_available_slots(doctor_id)
+
+    return jsonify(data)
+
+@app.route("/book", methods=["POST"])
+def book():
+
+    data = request.json
+
+    result = book_appointment(
+        patient_name=data["patient_name"],
+        patient_email=data["patient_email"],
+        doctor_id=data["doctor_id"],
+        appointment_date=data["appointment_date"],
+        appointment_time=data["appointment_time"]
+    )
+
+    return jsonify(result)
+
+@app.route("/cancel/<int:appointment_id>", methods=["PUT"])
+def cancel(appointment_id):
+
+    result = cancel_appointment(appointment_id)
+
+    return jsonify(result)
+
+from src.appointment import (
+    get_doctors_by_speciality,
+    get_available_slots,
+    book_appointment,
+    cancel_appointment,
+    reschedule_appointment
+)
+@app.route("/reschedule", methods=["GET", "PUT"])
+def reschedule():
+    print("RESCHEDULE API HIT")
+
+    data = request.json
+
+    result = reschedule_appointment(
+        appointment_id=data["appointment_id"],
+        new_date=data["new_date"],
+        new_time=data["new_time"]
+    )
+
+    return jsonify(result)
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))
+    print(app.url_map)
     app.run(host="0.0.0.0", port=port, debug=False)

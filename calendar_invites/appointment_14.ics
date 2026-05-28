@@ -2,10 +2,10 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Patient: Anushka\nDoctor: Dr. Priya Roy
-DTEND:20260528T143000Z
-DTSTART:20260528T140000Z
-SUMMARY:Appointment with Dr. Priya Roy
-UID:fccc491f-0b6b-4b86-bae1-79ea5132de18@fccc.org
+DESCRIPTION:Patient: Anushka\nDoctor: Dr. Deepak Chatterjee
+DTEND:20260602T093000Z
+DTSTART:20260602T090000Z
+SUMMARY:Appointment with Dr. Deepak Chatterjee
+UID:c55d40c0-6b9d-496c-b239-cae62c84f5f8@c55d.org
 END:VEVENT
 END:VCALENDAR

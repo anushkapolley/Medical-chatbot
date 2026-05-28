@@ -2,10 +2,10 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:ics.py - http://git.io/lLljaA
 BEGIN:VEVENT
-DESCRIPTION:Patient: Anushka\nDoctor: Dr. Priya Roy
-DTEND:20260528T143000Z
-DTSTART:20260528T140000Z
-SUMMARY:Appointment with Dr. Priya Roy
-UID:d0655dbe-9f5e-4f9b-bde8-ea7f4ba890e3@d065.org
+DESCRIPTION:Patient: Anushka\nDoctor: Dr. Ritu Malhotra
+DTEND:20260602T110000Z
+DTSTART:20260602T103000Z
+SUMMARY:Appointment with Dr. Ritu Malhotra
+UID:a95f4d00-3209-4508-9795-ca5168b3b770@a95f.org
 END:VEVENT
 END:VCALENDAR

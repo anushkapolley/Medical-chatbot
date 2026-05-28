@@ -4,40 +4,40 @@
 # def get_doctors_by_speciality(speciality):
 #     conn = get_connection()
 #     cursor = conn.cursor(dictionary=True)
-
+ 
 #     query = """
 #     SELECT *
 #     FROM doctors
 #     WHERE speciality=%s
 #     """
-
+ 
 #     cursor.execute(query, (speciality,))
 #     doctors = cursor.fetchall()
-
+ 
 #     cursor.close()
 #     conn.close()
-
+ 
 #     return doctors
-
+ 
 # def get_available_slots(doctor_id):
 #     conn = get_connection()
 #     cursor = conn.cursor(dictionary=True)
-
+ 
 #     query = """
 #     SELECT *
 #     FROM availability
 #     WHERE doctor_id=%s
 #     AND available=TRUE
 #     """
-
+ 
 #     cursor.execute(query, (doctor_id,))
 #     slots = cursor.fetchall()
-
+ 
 #     cursor.close()
 #     conn.close()
-
+ 
 #     return slots
-
+ 
 # def book_appointment(
 #     patient_name,
 #     patient_email,
@@ -47,7 +47,7 @@
 # ):
 #     conn = get_connection()
 #     cursor = conn.cursor(dictionary=True)
-
+ 
 #     # Check slot availability
 #     cursor.execute("""
 #         SELECT * FROM availability
@@ -56,27 +56,27 @@
 #         AND slot_time=%s
 #         AND available=TRUE
 #     """, (doctor_id, appointment_date, appointment_time))
-
+ 
 #     slot = cursor.fetchone()
-
+ 
 #     if not slot:
 #         cursor.close()
 #         conn.close()
-
+ 
 #         return {
 #             "success": False,
 #             "message": "Slot not available"
 #         }
-
+ 
 #     # Get doctor name
 #     cursor.execute(
 #         "SELECT name FROM doctors WHERE id=%s",
 #         (doctor_id,)
 #     )
-
+ 
 #     doctor = cursor.fetchone()
 #     doctor_name = doctor["name"]
-
+ 
 #     # Insert appointment
 #     cursor.execute("""
 #         INSERT INTO appointments(
@@ -96,9 +96,9 @@
 #         appointment_time,
 #         "Booked"
 #     ))
-
+ 
 #     appointment_id = cursor.lastrowid
-
+ 
 #     # Mark slot unavailable
 #     cursor.execute("""
 #         UPDATE availability
@@ -111,9 +111,9 @@
 #         appointment_date,
 #         appointment_time
 #     ))
-
+ 
 #     conn.commit()
-
+ 
 #     # Create calendar invite
 #     calendar_file = create_calendar_invite(
 #         appointment_id=appointment_id,
@@ -122,7 +122,7 @@
 #         appointment_date=str(appointment_date),
 #         appointment_time=str(appointment_time)
 #     )
-
+ 
 #     # Send confirmation email
 #     send_booking_email(
 #         patient_email=patient_email,
@@ -132,10 +132,10 @@
 #         appointment_time=appointment_time,
 #         attachment_path=calendar_file
 #     )
-
+ 
 #     cursor.close()
 #     conn.close()
-
+ 
 #     return {
 #         "success": True,
 #         "message": "Appointment booked successfully",
@@ -146,23 +146,23 @@
 # def cancel_appointment(appointment_id):
 #     conn = get_connection()
 #     cursor = conn.cursor()
-
+ 
 #     query = """
 #     UPDATE appointments
 #     SET status='Cancelled'
 #     WHERE id=%s
 #     """
-
+ 
 #     cursor.execute(query, (appointment_id,))
 #     conn.commit()
-
+ 
 #     cursor.close()
 #     conn.close()
-
+ 
 #     return {
 #         "message": "Appointment cancelled"
 #     }
-
+ 
 # def reschedule_appointment(
 #     appointment_id,
 #     new_date,
@@ -170,29 +170,29 @@
 # ):
 #     conn = get_connection()
 #     cursor = conn.cursor(dictionary=True)
-
+ 
 #     # 1. Fetch current appointment
 #     cursor.execute("""
 #         SELECT *
 #         FROM appointments
 #         WHERE id = %s
 #     """, (appointment_id,))
-
+ 
 #     appointment = cursor.fetchone()
-
+ 
 #     if not appointment:
 #         cursor.close()
 #         conn.close()
-
+ 
 #         return {
 #             "message": "Appointment not found"
 #         }
-
+ 
 #     doctor_id = appointment["doctor_id"]
-
+ 
 #     old_date = appointment["appointment_date"]
 #     old_time = appointment["appointment_time"]
-
+ 
 #     cursor.execute("""
 #         SELECT *
 #         FROM availability
@@ -206,13 +206,13 @@
 #         new_date,
 #         new_time
 #     ))
-
+ 
 #     slot = cursor.fetchone()
-
+ 
 #     if not slot:
 #         cursor.close()
 #         conn.close()
-
+ 
 #         return {
 #             "message": "Selected slot not available"
 #         }
@@ -228,18 +228,18 @@
 #         appointment_id
 #     ))
 #     conn.commit()
-
+ 
 #     cursor.close()
 #     conn.close()
-
+ 
 #     return {
 #         "message": "Appointment rescheduled successfully"
 #     }
 from src.database import get_connection
 from src.calender_service import create_calendar_invite
 from src.email_service import send_booking_email
-
-
+ 
+ 
 def get_doctors_by_speciality(speciality):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
@@ -248,8 +248,8 @@ def get_doctors_by_speciality(speciality):
     cursor.close()
     conn.close()
     return doctors
-
-
+ 
+ 
 def get_available_slots(doctor_id):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
@@ -261,7 +261,7 @@ def get_available_slots(doctor_id):
     cursor.close()
     conn.close()
     return slots
-
+ 
 def find_doctor_for_slot(speciality, appointment_date, appointment_time):
     doctors = get_doctors_by_speciality(speciality)
     for doctor in doctors:
@@ -281,8 +281,8 @@ def find_doctor_for_slot(speciality, appointment_date, appointment_time):
                     str(slot_time) == str(appointment_time)):
                 return doctor
     return None
-
-
+ 
+ 
 def book_appointment(
     patient_name,
     patient_email,
@@ -292,7 +292,7 @@ def book_appointment(
 ):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-
+ 
     # Check slot availability
     cursor.execute("""
         SELECT * FROM availability
@@ -301,9 +301,9 @@ def book_appointment(
         AND slot_time=%s
         AND available=TRUE
     """, (doctor_id, appointment_date, appointment_time))
-
+ 
     slot = cursor.fetchone()
-
+ 
     if not slot:
         cursor.close()
         conn.close()
@@ -311,12 +311,12 @@ def book_appointment(
             "success": False,
             "message": "Slot not available"
         }
-
+ 
     # Get doctor name
     cursor.execute("SELECT name FROM doctors WHERE id=%s", (doctor_id,))
     doctor = cursor.fetchone()
     doctor_name = doctor["name"]
-
+ 
     # Insert appointment
     cursor.execute("""
         INSERT INTO appointments(
@@ -324,17 +324,17 @@ def book_appointment(
             appointment_date, appointment_time, status
         ) VALUES(%s,%s,%s,%s,%s,%s)
     """, (patient_name, patient_email, doctor_id, appointment_date, appointment_time, "Booked"))
-
+ 
     appointment_id = cursor.lastrowid
-
+ 
     # Mark slot unavailable
     cursor.execute("""
         UPDATE availability SET available=FALSE
         WHERE doctor_id=%s AND slot_date=%s AND slot_time=%s
     """, (doctor_id, appointment_date, appointment_time))
-
+ 
     conn.commit()
-
+ 
     # ✅ FIX: Email failure no longer crashes the booking
     calendar_file = None
     email_sent = False
@@ -357,10 +357,10 @@ def book_appointment(
         email_sent = True
     except Exception as e:
         print(f"Email failed (booking still successful): {e}")
-
+ 
     cursor.close()
     conn.close()
-
+ 
     return {
         "success": True,
         "message": "Appointment booked successfully",
@@ -368,8 +368,8 @@ def book_appointment(
         "calendar_file": calendar_file,
         "email_sent": email_sent
     }
-
-
+ 
+ 
 def cancel_appointment(appointment_id):
     conn = get_connection()
     cursor = conn.cursor()
@@ -378,56 +378,57 @@ def cancel_appointment(appointment_id):
     cursor.close()
     conn.close()
     return {"message": "Appointment cancelled"}
-
-
+ 
+ 
 def reschedule_appointment(appointment_id, new_date, new_time):
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-
+ 
     cursor.execute("SELECT * FROM appointments WHERE id = %s", (appointment_id,))
     appointment = cursor.fetchone()
-
+ 
     if not appointment:
         cursor.close()
         conn.close()
         return {"message": "Appointment not found"}
-
+ 
     doctor_id = appointment["doctor_id"]
-
+ 
     cursor.execute("""
         SELECT * FROM availability
         WHERE doctor_id = %s AND slot_date = %s
         AND slot_time = %s AND available = TRUE
     """, (doctor_id, new_date, new_time))
-
+ 
     slot = cursor.fetchone()
-
+ 
     if not slot:
         cursor.close()
         conn.close()
         return {"message": "Selected slot not available"}
-
+ 
     # ✅ Free up old slot
     cursor.execute("""
         UPDATE availability SET available=TRUE
         WHERE doctor_id=%s AND slot_date=%s AND slot_time=%s
     """, (doctor_id, appointment["appointment_date"], appointment["appointment_time"]))
-
+ 
     # Update appointment
     cursor.execute("""
         UPDATE appointments
         SET appointment_date=%s, appointment_time=%s
         WHERE id=%s
     """, (new_date, new_time, appointment_id))
-
+ 
     # Mark new slot unavailable
     cursor.execute("""
         UPDATE availability SET available=FALSE
         WHERE doctor_id=%s AND slot_date=%s AND slot_time=%s
     """, (doctor_id, new_date, new_time))
-
+ 
     conn.commit()
     cursor.close()
     conn.close()
-
+ 
     return {"message": "Appointment rescheduled successfully"}
+ 

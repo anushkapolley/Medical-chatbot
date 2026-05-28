@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:ics.py - http://git.io/lLljaA
+BEGIN:VEVENT
+DESCRIPTION:Patient: Anushka\nDoctor: Dr. Priya Roy
+DTEND:20260528T143000Z
+DTSTART:20260528T140000Z
+SUMMARY:Appointment with Dr. Priya Roy
+UID:b3aafb2e-02ca-4049-965c-4d7f5672894c@b3aa.org
+END:VEVENT
+END:VCALENDAR

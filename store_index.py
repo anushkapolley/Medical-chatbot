@@ -21,16 +21,23 @@ embeddings = download_embeddings()
 # Initialize Pinecone
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-# IMPORTANT: NEW index name (avoid old 384-dim index)
-index_name = "medical-chatbot-bbg"
+index_name = "medical-chatbot"
 
-# Create new index if it doesn't exist
-if not pc.has_index(index_name):
+existing_indexes = [
+    index["name"]
+    for index in pc.list_indexes()
+]
+
+if index_name not in existing_indexes:
+
     pc.create_index(
         name=index_name,
-        dimension=768,  # HuggingFace all-MiniLM-L6-v2
+        dimension=768,
         metric="cosine",
-        spec=ServerlessSpec(cloud="aws", region="us-east-1"),
+        spec=ServerlessSpec(
+            cloud="aws",
+            region="us-east-1"
+        ),
     )
 
 # Store embeddings in Pinecone

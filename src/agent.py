@@ -141,11 +141,11 @@
 #         "time": time
 #     }
  
-from langchain_groq import ChatGroq
 import re
 from datetime import datetime
 
-llm = ChatGroq(model_name="llama-3.1-8b-instant")
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 
 # ─────────────────────────────────────────────────────────────

@@ -26,7 +26,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "medical-chatbot-secret-key")
  
 embeddings = download_embeddings()
  
-index_name = "medical-chatbot-openai"
+index_name = "medicalchatbot"
  
 docsearch = PineconeVectorStore.from_existing_index(
     index_name=index_name,

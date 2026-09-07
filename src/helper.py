@@ -44,6 +44,4 @@ def text_split(extracted_data):
 from langchain_openai import OpenAIEmbeddings
 
 def download_embeddings():
-    return OpenAIEmbeddings(
-        model="text-embedding-3-small"  # or "text-embedding-3-large"
-    )
+    return OpenAIEmbeddings(model="text-embedding-3-small", dimensions=1024)

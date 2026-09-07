@@ -1,7 +1,7 @@
 ﻿from flask import Flask, render_template, jsonify, request, session
 from src.helper import download_embeddings
 from langchain_pinecone import PineconeVectorStore
-from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
@@ -13,13 +13,13 @@ import re
 load_dotenv()
  
 PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY')
-GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
- 
-if not PINECONE_API_KEY or not GROQ_API_KEY:
-    raise ValueError("Missing API keys! Set PINECONE_API_KEY and GROQ_API_KEY in environment variables.")
- 
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+
+if not PINECONE_API_KEY or not OPENAI_API_KEY:
+    raise ValueError("Missing API keys! Set PINECONE_API_KEY and OPENAI_API_KEY in environment variables.")
+
 os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
  
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "medical-chatbot-secret-key")
@@ -35,7 +35,7 @@ docsearch = PineconeVectorStore.from_existing_index(
  
 retriever = docsearch.as_retriever(search_type="similarity", search_kwargs={"k": 3})
  
-chatModel = ChatGroq(model_name="llama-3.1-8b-instant")
+chatModel = ChatOpenAI(model="gpt-4o-mini")
  
 prompt = ChatPromptTemplate.from_messages(
     [

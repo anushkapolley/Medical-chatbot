@@ -22,7 +22,7 @@ filter_data = filter_to_minimal_docs(extracted_data)
 text_chunks = text_split(filter_data)
 
 # Load OpenAI embeddings
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small", dimensions=1024)
 
 # Initialize Pinecone
 pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -37,14 +37,14 @@ existing_indexes = [
 if index_name not in existing_indexes:
 
     pc.create_index(
-        name=index_name,
-        dimension=1536,  # matches text-embedding-3-small
-        metric="cosine",
-        spec=ServerlessSpec(
-            cloud="aws",
-            region="us-east-1"
-        ),
-    )
+    name=index_name,
+    dimension=1024,   # ← changed from 1536
+    metric="cosine",
+    spec=ServerlessSpec(
+        cloud="aws",
+        region="us-east-1"
+    ),
+)
 
 # Store embeddings in Pinecone
 docsearch = PineconeVectorStore.from_documents(

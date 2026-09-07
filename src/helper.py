@@ -41,9 +41,9 @@ def text_split(extracted_data):
 
 
 #Download the Embeddings from HuggingFace 
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
 def download_embeddings():
-    return HuggingFaceEmbeddings(
-        model_name="BAAI/bge-base-en-v1.5"
+    return OpenAIEmbeddings(
+        model="text-embedding-3-small"  # or "text-embedding-3-large"
     )

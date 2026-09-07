@@ -27,7 +27,7 @@ embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 # Initialize Pinecone
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
-index_name = "medical-chatbot-openai"  # new index, matches OpenAI embedding dims
+index_name = "medicalchatbot"  # new index, matches OpenAI embedding dims
 
 existing_indexes = [
     index["name"]
